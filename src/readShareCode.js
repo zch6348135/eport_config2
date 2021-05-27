@@ -44,6 +44,7 @@ module.exports = {
     },
     //获取共享策略
     getForOther: (cookieName) => {
+        console.log(config)
         const templateMy = "My";
         const templateForOther = "ForOther";
         let available = 2;
@@ -52,7 +53,6 @@ module.exports = {
                 available = value.available;
             }
         })
-
         let out = "";
         for (let i = 1; i <= config.accountNum; i++) {
             let temp = "";

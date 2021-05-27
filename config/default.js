@@ -1,7 +1,5 @@
 module.exports = {
-    jsNames: ["Zoo", "City", "health", "Fruit", "Bean"
-        , "DreamFactory", "JdFactory", "Jdzz", "Joy", "Jxnc"
-        , "Cash", "Sgmh", "Cfd"],
+
     sampleMap: [
         {key: 'Fruit', value: '京东农场', available: 2},
         {key: 'Pet', value: '京东萌宠', available: 2},
@@ -15,6 +13,6 @@ module.exports = {
         {key: 'Sgmh', value: '闪购盲盒', available: 2},
         {key: 'Cfd', value: '财富岛', available: 2}
     ],
-    mainIndex: 1,
-    accountNum: 19
+    accountNum: 20,
+    mainIndex: 1
 }

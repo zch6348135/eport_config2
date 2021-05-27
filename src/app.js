@@ -15,6 +15,7 @@ config.sampleMap.forEach((value => {
 }))
 let outFile2 = path.resolve(__dirname, './other.txt')
 fs.writeFile(outFile, out, {encoding: 'utf8'}, () => {});
+console.log(out)
 out = readShare.getForOther("ZooPk");
 fs.writeFile(outFile2, out, {encoding: 'utf8'}, () => {});
 out = readShare.getForOther2("Zoo");
