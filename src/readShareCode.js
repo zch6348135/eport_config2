@@ -44,7 +44,6 @@ module.exports = {
     },
     //获取共享策略
     getForOther: (cookieName) => {
-        console.log(config)
         const templateMy = "My";
         const templateForOther = "ForOther";
         let available = 2;
@@ -65,18 +64,18 @@ module.exports = {
                     }
                     value += "${" + templateMy + cookieName + (j - config.accountNum + k) + "}@";
                 } else {
-                    value += "${" + templateMy + cookieName + j + "}@";
+                    value += "${" + templateMy + cookieName + (j+1) + "}@";
                 }
 
             }
             value += "${" + templateMy + cookieName + config.mainIndex + "}";
             let arr = value.split('@');
             if (i !== config.mainIndex) {
-                let temp = arr[1];
-                arr[1] = arr[arr.length - 1];
+                let temp = arr[0];
+                arr[0] = arr[arr.length - 1];
                 arr[arr.length - 1] = temp;
             } else {
-                arr[arr.length - 1] = "${" + templateMy + cookieName + arr.length + "}";
+                arr[arr.length - 1] = "${" + templateMy + cookieName + (arr.length+1) + "}";
             }
             value = "";
             arr.forEach((s, i) => {
@@ -90,9 +89,7 @@ module.exports = {
         for (let i=1;i<=config.accountNum;i++){
             let my = templateMy+cookieName+i;
             let re = new RegExp(my,"g");
-            console.log(my +"出现的次数:"+out.match(re).length);
         }
-        console.log(out);
         return out;
     },//获取共享策略2 互点
     getForOther2: (cookieName) => {
@@ -114,7 +111,7 @@ module.exports = {
                 if (j > config.accountNum) {
                     value += "${" + templateMy + cookieName + (j - config.accountNum + k) + "}@";
                 } else {
-                    value += "${" + templateMy + cookieName + j + "}@";
+                    value += "${" + templateMy + cookieName + (j+1) + "}@";
                 }
 
             }
