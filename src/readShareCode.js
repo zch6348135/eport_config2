@@ -121,6 +121,15 @@ module.exports = {
         }
         console.log(out);
         return out;
+    },getZooPk:()=>{
+        let data = fs.readFileSync('resource/zooPk.txt', 'utf-8');
+        let out = "";
+        for (let i = 1; i <= config.accountNum; i++) {
+            data = common.getAfterStr("当前账号所在队伍PK互助码：",data);
+            let pk = common.getBeforeStr("\r\n",data);
+            out += "MyZooPk" + i + "=\"" + pk + "\"\r\n";
+        }
+        return out;
     }
 
 }

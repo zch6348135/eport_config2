@@ -18,6 +18,10 @@ fs.writeFile(outFile, out, {encoding: 'utf8'}, () => {});
 out = readShare.getForOther("ZooPk");
 fs.writeFile(outFile2, out, {encoding: 'utf8'}, () => {});
 out = readShare.getForOther2("Zoo");
+let outFile3 = path.resolve(__dirname, './ZooPk.txt')
+fs.writeFile(outFile3, readShare.getZooPk(), {encoding: 'utf8'}, () => {});
+
+
 
 
 
