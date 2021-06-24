@@ -26,7 +26,7 @@ module.exports = {
             accounts.forEach((accountValue) => {
                 if (accountValue.indexOf(chineseName + "】") > 0) {
                     let cookie = common.getAfterStr(chineseName + "】", accountValue);
-                    if (cookie !== "undefined"){
+                    if (cookie !== "undefined") {
                         if (cookieName === "Jxnc") {
                             if (cookie.indexOf("未选择种子") >= 0) {
                                 out += "My" + cookieName + i + "=\'\'\r\n";
@@ -75,7 +75,7 @@ module.exports = {
                 arr[0] = arr[arr.length - 1];
                 arr[arr.length - 1] = temp;
             } else {
-                arr[arr.length - 1] = "${" + templateMy + cookieName + (arr.length+1) + "}";
+                arr[arr.length - 1] = "${" + templateMy + cookieName + (arr.length + 1) + "}";
             }
             value = "";
             arr.forEach((s, i) => {
@@ -86,9 +86,9 @@ module.exports = {
             })
             out += templateForOther + cookieName + i + "=\"" + temp + "\"\r\n";
         }
-        for (let i=1;i<=config.accountNum;i++){
-            let my = templateMy+cookieName+i;
-            let re = new RegExp(my,"g");
+        for (let i = 1; i <= config.accountNum; i++) {
+            let my = templateMy + cookieName + i;
+            let re = new RegExp(my, "g");
         }
         return out;
     },//获取共享策略2 互点
@@ -111,23 +111,27 @@ module.exports = {
                 if (j > config.accountNum) {
                     value += "${" + templateMy + cookieName + (j - config.accountNum + k) + "}@";
                 } else {
-                    value += "${" + templateMy + cookieName + (j+1) + "}@";
+                    value += "${" + templateMy + cookieName + (j + 1) + "}@";
                 }
 
             }
-            value = value.substr(0,value.length-1);
+            value = value.substr(0, value.length - 1);
 
             out += templateForOther + cookieName + i + "=\"" + value + "\"\r\n";
         }
-        console.log(out);
+        // console.log(out);
         return out;
-    },getZooPk:()=>{
-        let data = fs.readFileSync('resource/zooPk.txt', 'utf-8');
+    }, getZooPk: () => {
+        let data = fs.readFileSync('resource/health.txt', 'utf-8');
         let out = "";
         for (let i = 1; i <= config.accountNum; i++) {
-            data = common.getAfterStr("当前账号所在队伍PK互助码：",data);
-            let pk = common.getBeforeStr("\r\n",data);
-            out += "MyZooPk" + i + "=\"" + pk + "\"\r\n";
+            let nowAccount = common.getMidStr("\r\n【京东账号","（",data);
+            if (i !== parseInt(nowAccount)){
+                continue;
+            }
+            data = common.getAfterStr("的东东健康社区好友互助码】", data);
+            let pk = common.getBeforeStr("\r\n", data);
+            out += "Myhealth" + i + "=\"" + pk + "\"\r\n";
         }
         return out;
     }

@@ -13,12 +13,12 @@ config.sampleMap.forEach((value => {
     out += readShare.getForOther(value.key);
     out += "\r\n\r\n";
 }))
-let outFile2 = path.resolve(__dirname, './other.txt')
+// let outFile2 = path.resolve(__dirname, './other.txt')
 fs.writeFile(outFile, out, {encoding: 'utf8'}, () => {});
-out = readShare.getForOther("ZooPk");
-fs.writeFile(outFile2, out, {encoding: 'utf8'}, () => {});
-out = readShare.getForOther2("Zoo");
-let outFile3 = path.resolve(__dirname, './ZooPk.txt')
+// out = readShare.getForOther("Zoo");
+// fs.writeFile(outFile2, out, {encoding: 'utf8'}, () => {});
+// out = readShare.getForOther2("Zoo");
+let outFile3 = path.resolve(__dirname, './health.txt')
 fs.writeFile(outFile3, readShare.getZooPk(), {encoding: 'utf8'}, () => {});
 
 

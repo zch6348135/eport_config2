@@ -13,6 +13,6 @@ module.exports = {
         {key: 'Sgmh', value: '闪购盲盒', available: 2},
         {key: 'Cfd', value: '财富岛', available: 2}
     ],
-    accountNum: 20,
+    accountNum: 40,
     mainIndex: 1
 }
