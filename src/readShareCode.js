@@ -64,7 +64,7 @@ module.exports = {
                     }
                     value += "${" + templateMy + cookieName + (j - config.accountNum + k) + "}@";
                 } else {
-                    value += "${" + templateMy + cookieName + (j+1) + "}@";
+                    value += "${" + templateMy + cookieName + (j + 1) + "}@";
                 }
 
             }
@@ -121,18 +121,56 @@ module.exports = {
         }
         // console.log(out);
         return out;
-    }, getZooPk: () => {
+    }, getHealth: () => {
         let data = fs.readFileSync('resource/health.txt', 'utf-8');
         let out = "";
         for (let i = 1; i <= config.accountNum; i++) {
-            let nowAccount = common.getMidStr("\r\n【京东账号","（",data);
-            if (i !== parseInt(nowAccount)){
+            let nowAccount = common.getMidStr("\r\n【京东账号", "（", data);
+            if (i !== parseInt(nowAccount)) {
                 continue;
             }
             data = common.getAfterStr("的东东健康社区好友互助码】", data);
             let pk = common.getBeforeStr("\r\n", data);
             out += "Myhealth" + i + "=\"" + pk + "\"\r\n";
         }
+        return out;
+    }, getSummerCode: () => {
+        let data = fs.readFileSync('resource/summer.log', 'utf-8');
+        let total = common.getMidStr("====================共有", "个京东账号Cookie=========", data)
+        total = parseInt(total);
+        let out = "";
+        for (let i = 1; i <= total; i++) {
+            let code = "";
+            let nowAccount = "";
+            if (i === total) {
+                nowAccount = common.getAfterStr("*****开始【京东账号" + i, data);
+                nowAccount = common.getAfterStr("互助码：", nowAccount);
+                code = common.getBeforeStr("\n", nowAccount);
+            } else {
+                nowAccount = common.getMidStr("*****开始【京东账号" + i, "*****开始【京东账号" + (i + 1), data);
+                nowAccount = common.getAfterStr("互助码：", nowAccount);
+                code = common.getBeforeStr("\n", nowAccount);
+            }
+            out += "MySummer" + i + "=\"" + code + "\"\r\n";
+
+        }
+        return out;
+    },getBookCode:()=>{
+        let out = "";
+        let data = fs.readFileSync('resource/book.log', 'utf-8');
+        let total = common.getMidStr("====================共", "个京东账号Cookie=========", data)
+        total = parseInt(total);
+        for (let i = 1; i <= total; i++) {
+            let code = "";
+            let nowAccount = "";
+            nowAccount = common.getAfterStr("【京东账号1（" + i, data);
+            nowAccount = common.getAfterStr("的口袋书店好友互助码】", nowAccount);
+            code = common.getBeforeStr("\r\n", nowAccount);
+
+            out += "MyBook" + i + "=\"" + code + "\"\r\n";
+
+        }
+        console.log(out)
         return out;
     }
 
