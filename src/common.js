@@ -1,7 +1,7 @@
 module.exports = {
     getMidStr: (startStr, endStr, data) => {
         let offset = data.indexOf(startStr);
-        let offset2 = data.indexOf(endStr);
+        let offset2 = data.indexOf(endStr,offset);
         return data.substr(offset + startStr.length, offset2 - offset - startStr.length);
     },
     getAfterStr: (startStr, data) => {

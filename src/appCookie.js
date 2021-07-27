@@ -4,3 +4,4 @@ const path = require('path')
 const readCookie = require("./readCookie")
 'use strict';
 readCookie.getSMZDM();
+readCookie.getOutFile();
