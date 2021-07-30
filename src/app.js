@@ -4,6 +4,7 @@ const path = require('path')
 'use strict';
 
 const readShare = require('./readShareCode')
+readShare.reFormatCode();
 let outFile = path.resolve(__dirname, './config.txt')
 let out = "";
 config.sampleMap.forEach((value => {

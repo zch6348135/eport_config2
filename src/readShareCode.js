@@ -1,6 +1,7 @@
 const config = require('config-lite')(__dirname);
 const fs = require("fs");
 const common = require('./common');
+const path = require('path')
 'use strict'
 module.exports = {
 
@@ -155,7 +156,7 @@ module.exports = {
 
         }
         return out;
-    },getBookCode:()=>{
+    }, getBookCode: () => {
         let out = "";
         let data = fs.readFileSync('resource/book.log', 'utf-8');
         let total = common.getMidStr("====================共", "个京东账号Cookie=========", data)
@@ -170,8 +171,33 @@ module.exports = {
             out += "MyBook" + i + "=\"" + code + "\"\r\n";
 
         }
-        console.log(out)
         return out;
+    }, reFormatCode: () => {
+        let data = fs.readFileSync('resource/code.log', 'utf-8');
+        let rows  = data.split("\r\n");
+        let newData = ""
+        rows.forEach(value => {
+            if (value.startsWith("ForOther")){
+                let v = common.getMidStr("ForOther","=",value)
+                let s = v.search(/[A-Z]/i)
+                let d = v.search(/[\d]/g)
+                let keyWord = v.substr(s,d);
+                let index = v.substr(d);
+                let cut1 = value.substr(value.indexOf("\"")+1)
+                if (index !== "1"){
+                    newData += "ForOther"+keyWord+index+"=\"${My"+keyWord+"1}@"+cut1+"\r\n"
+                }else {
+                    newData += value +"\r\n";
+                }
+            }else {
+                newData += value +"\r\n";
+            }
+            // console.log(newData)
+        })
+        console.log(rows.length)
+        let outFile = path.resolve(__dirname, '../out/newCode.log')
+        fs.writeFile(outFile, newData, {encoding: 'utf8'}, () => {
+        });
     }
 
 }
