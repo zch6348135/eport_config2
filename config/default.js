@@ -14,5 +14,6 @@ module.exports = {
         {key: 'Cfd', value: '财富岛', available: 2}
     ],
     accountNum: 40,
-    mainIndex: 1
+    mainIndex: 1,
+    availableHelp:8
 }

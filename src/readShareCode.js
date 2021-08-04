@@ -174,25 +174,37 @@ module.exports = {
         return out;
     }, reFormatCode: () => {
         let data = fs.readFileSync('resource/code.log', 'utf-8');
-        let rows  = data.split("\r\n");
+        let rows = data.split("\r\n");
         let newData = ""
+        let rowData = ""
         rows.forEach(value => {
-            if (value.startsWith("ForOther")){
-                let v = common.getMidStr("ForOther","=",value)
+            if (value.startsWith("ForOther")) {
+                let v = common.getMidStr("ForOther", "=", value)
                 let s = v.search(/[A-Z]/i)
                 let d = v.search(/[\d]/g)
-                let keyWord = v.substr(s,d);
+                let keyWord = v.substr(s, d);
                 let index = v.substr(d);
-                let cut1 = value.substr(value.indexOf("\"")+1)
-                if (index !== "1"){
-                    newData += "ForOther"+keyWord+index+"=\"${My"+keyWord+"1}@"+cut1+"\r\n"
-                }else {
-                    newData += value +"\r\n";
+                let cut1 = value.substr(value.indexOf("\"") + 1)
+                if (index !== "1") {
+                    rowData = "ForOther" + keyWord + index + "=\"${My" + keyWord + "1}@" + cut1 + "\r\n";
+                } else {
+                    rowData = value + "\r\n";
                 }
-            }else {
-                newData += value +"\r\n";
+            } else {
+                rowData = value + "\r\n";
             }
-            // console.log(newData)
+            let arr = rowData.split("@");
+            let shortRowData = "";
+            if (arr !== undefined && arr.length > config.availableHelp) {
+                for (let i = 0; i < config.availableHelp; i++) {
+                    shortRowData += arr[i]+"@"
+                }
+                shortRowData = shortRowData.substr(0,shortRowData.length-1)
+                shortRowData += "\"\r\n"
+                newData += shortRowData;
+            } else {
+                newData += rowData;
+            }
         })
         console.log(rows.length)
         let outFile = path.resolve(__dirname, '../out/newCode.log')
