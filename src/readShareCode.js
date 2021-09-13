@@ -135,43 +135,6 @@ module.exports = {
             out += "Myhealth" + i + "=\"" + pk + "\"\r\n";
         }
         return out;
-    }, getSummerCode: () => {
-        let data = fs.readFileSync('resource/summer.log', 'utf-8');
-        let total = common.getMidStr("====================共有", "个京东账号Cookie=========", data)
-        total = parseInt(total);
-        let out = "";
-        for (let i = 1; i <= total; i++) {
-            let code = "";
-            let nowAccount = "";
-            if (i === total) {
-                nowAccount = common.getAfterStr("*****开始【京东账号" + i, data);
-                nowAccount = common.getAfterStr("互助码：", nowAccount);
-                code = common.getBeforeStr("\n", nowAccount);
-            } else {
-                nowAccount = common.getMidStr("*****开始【京东账号" + i, "*****开始【京东账号" + (i + 1), data);
-                nowAccount = common.getAfterStr("互助码：", nowAccount);
-                code = common.getBeforeStr("\n", nowAccount);
-            }
-            out += "MySummer" + i + "=\"" + code + "\"\r\n";
-
-        }
-        return out;
-    }, getBookCode: () => {
-        let out = "";
-        let data = fs.readFileSync('resource/book.log', 'utf-8');
-        let total = common.getMidStr("====================共", "个京东账号Cookie=========", data)
-        total = parseInt(total);
-        for (let i = 1; i <= total; i++) {
-            let code = "";
-            let nowAccount = "";
-            nowAccount = common.getAfterStr("【京东账号1（" + i, data);
-            nowAccount = common.getAfterStr("的口袋书店好友互助码】", nowAccount);
-            code = common.getBeforeStr("\r\n", nowAccount);
-
-            out += "MyBook" + i + "=\"" + code + "\"\r\n";
-
-        }
-        return out;
     }, reFormatCode: () => {
         let data = fs.readFileSync('resource/code.log', 'utf-8');
         let rows = data.split("\r\n");
@@ -190,25 +153,33 @@ module.exports = {
                 } else {
                     rowData = value + "\r\n";
                 }
-            } else {
-                rowData = value + "\r\n";
-            }
-            let arr = rowData.split("@");
-            let shortRowData = "";
-            if (arr !== undefined && arr.length > config.availableHelp) {
-                for (let i = 0; i < config.availableHelp; i++) {
-                    shortRowData += arr[i]+"@"
+                const firstWord = "ForOther"+keyWord+index+"=\""
+                rowData = rowData.substr(rowData.indexOf(firstWord)+firstWord.length)
+                let arr = rowData.split("@");
+                let shortRowData = "";
+                arr = arr.filter((item, index, arr) => {
+                    return arr.indexOf(item, 0) === index;
+                })
+                if (arr !== undefined && arr.length > config.availableHelp) {
+                    for (let i = 0; i < config.availableHelp; i++) {
+                        shortRowData += arr[i] + "@"
+                    }
+                    shortRowData = shortRowData.substr(0, shortRowData.length - 1)
+                    shortRowData += "\"\r\n"
+                    newData += firstWord+shortRowData;
+                } else {
+                    newData += firstWord+rowData;
                 }
-                shortRowData = shortRowData.substr(0,shortRowData.length-1)
-                shortRowData += "\"\r\n"
-                newData += shortRowData;
             } else {
-                newData += rowData;
+                newData += value + "\r\n";
             }
         })
         console.log(rows.length)
         let outFile = path.resolve(__dirname, '../out/newCode.log')
-        fs.writeFile(outFile, newData, {encoding: 'utf8'}, () => {
+        fs.writeFile(outFile, newData, {encoding: 'utf8'}, (err) => {
+            if (err){
+                console.log(err)
+            }
         });
     }
 

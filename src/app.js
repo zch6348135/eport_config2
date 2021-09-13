@@ -19,11 +19,6 @@ fs.writeFile(outFile, out, {encoding: 'utf8'}, () => {});
 // out = readShare.getForOther("Zoo");
 // fs.writeFile(outFile2, out, {encoding: 'utf8'}, () => {});
 // out = readShare.getForOther2("Zoo");
-let outFile3 = path.resolve(__dirname, './health.txt')
-fs.writeFile(outFile3, readShare.getHealth(), {encoding: 'utf8'}, () => {});
-let outSummerFile = path.resolve(__dirname,'./summer.txt')
-fs.writeFile(outSummerFile, readShare.getSummerCode(),{encoding: 'utf8'}, () => {});
-readShare.getBookCode()
 
 
 
